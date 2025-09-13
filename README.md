@@ -25,15 +25,15 @@ This simple **Node.js Hello World Node** web application, designed to demonstrat
 ## Project Structure
 
 .
-├── .github/workflows/cicd.yaml # GitHub Actions CI/CD pipeline
-├── Dockerfile # Docker configuration
-├── main.tf # Terraform config (Docker provider)
-├── newrelic.js # New Relic config (uses GitHub secret)
-├── .eslintrc.json # ESLint configuration
-├── .pre-commit-config.yaml # Pre-commit hooks
-├── index.js # Node.js app entry point
-├── package.json # Node dependencies and scripts
-└── README.md # Project documentation
+├── .github/workflows/cicd.yaml     # GitHub Actions CI/CD pipeline
+├── Dockerfile                      # Docker configuration
+├── main.tf                         # Terraform config (Docker provider)
+├── newrelic.js                     # New Relic agent config
+├── .eslintrc.json                  # ESLint configuration
+├── .pre-commit-config.yaml         # Pre-commit hook config
+├── index.js                        # Node.js app entry point
+├── package.json                    # Project metadata and scripts
+└── README.md                       # Project documentation
 
 ## Installation & Setup
 
@@ -43,11 +43,12 @@ This simple **Node.js Hello World Node** web application, designed to demonstrat
 - Docker installed and running
 - Terraform installed
 - GitHub CLI or access to your repository
+- Pre-commit (for hooks)
 
 
 ## Run Locally
 
-1. Fork repo to my your github account and Clone the repo:
+1. Clone the repo:
    using bash/linux terminal or cloning forexample on Visual Studio Code
    git clone https://github.com/yourusername/node-hello.git
    cd node-hello
@@ -63,23 +64,30 @@ http://localhost:3000
 
 ## Docker
 
-You can build and run the app with Docker:
+### Build and Run Locally
+
 docker build -t hello-world-node .
-docker push dockerhub_udername/hello-world-node (for pushing manually to docker hub)
 docker run -p 3000:3000 hello-world-node
+
+### Push to Docker Hub
+
+docker push your-dockerhub-username/hello-world-node:latest
+
+    Make sure to log in first:
+    docker login
 
 ## CI Pipeline (GitHub Actions)
 
 This project uses GitHub Actions for CI. The pipeline runs on push or pull_request to main or testing-branch.
 Steps:
 
-    Checkout code
-    Set up Node.js
-    Install dependencies
-    Run ESLint
-    Login to Docker Hub
-    Build Docker image (injecting New Relic license via secret)
-    Push image to Docker Hub
+    1- Checkout code
+    2- Set up Node.js
+    3- Install dependencies
+    4- Run ESLint
+    5- Login to Docker Hub
+    6- Build Docker image (injecting New Relic license via secret)
+    7- Push image to Docker Hub
 
 File:
 .github/workflows/ci.yaml
@@ -90,10 +98,11 @@ File:
 Deploy the app as a container on your local machine using Terraform:
 1. Initialize Terraform:
 terraform init
+
 2. Apply the deployment:
 terraform apply
-The app will be running on http://localhost:3000
 
+The app will be running on http://localhost:3000
 Note: Make sure port 3000 is not in use by another process
 
 3. Destroy deployment:
@@ -102,6 +111,7 @@ terraform destroy
 ## Monitoring using New Relic
 
 Monitoring is integrated via the newrelic.js file.
+It is called Hello World Nope App on New Relic.
 The license key is injected via GitHub Secrets (NEW_RELIC_LICENSE_KEY)
 Make sure you’ve set up New Relic and created a free-tier account
 
